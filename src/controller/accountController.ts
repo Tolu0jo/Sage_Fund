@@ -31,13 +31,41 @@ export const getAccount = async (req: Request | any, res: Response) => {
   try {
     const { _id } = req.user;
 
-    const accounts = accountModel.findOne({ user_id: _id });
+    const account= await accountModel.findOne({ user_id: _id });
 
     return res
-      .status(201)
-      .json({ message: "Accounts retrieved successfully", accounts });
+      .status(200)
+      .json({ message: "Accounts retrieved successfully", account});
   } catch (error) {
     console.error(error);
     return res.status(500).json({ Error: "Internal Server Error" });
   }
 };
+
+export const fundAccount = async (req: Request | any, res: Response) => {
+    try {
+        const { _id } = req.user;
+        const {amount}=req.body;
+        const amountInNumber = parseInt(amount);
+    
+        const existingAccount = await accountModel.findOne({ user_id: _id });
+    
+        if(!existingAccount){
+            return res
+            .status(400)
+            .json({ message: "Kindly create an account before funding." });
+        }
+    
+       existingAccount.balance += amountInNumber ;
+
+       const account= await existingAccount.save();
+
+       return res
+       .status(200)
+       .json({ message: "Accounts retrieved successfully", account });
+    } catch (error) {
+        console.error(error);
+    return res.status(500).json({ Error: "Internal Server Error" }); 
+    }
+
+}
