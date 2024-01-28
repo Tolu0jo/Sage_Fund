@@ -2,6 +2,7 @@ import express from 'express';
 import logger  from "morgan";
 import cors from "cors";
 import { PORT } from './config/config';
+import { dbConnect } from './config/db';
 
 
 const app = express();
@@ -12,7 +13,7 @@ app.use(logger("dev"));
 
 app.use(cors());
 
-
+dbConnect()
 
 
 
