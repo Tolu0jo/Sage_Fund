@@ -4,7 +4,7 @@ import { JWT_SECRET_KEY } from "../config/config";
 
 const shortUUIDInstance = shortUUID("0123456789");
 
-export const generateUniqueNumericId=()=>{
+export const generateAcctNo=()=>{
   return shortUUIDInstance.generate().slice(0, 10);
 }
 
@@ -16,7 +16,7 @@ export const generateJwtToken = async(_id:string|object|Buffer)=>{
     }
 }
 
-export const validateSignature = async(req:Request | any)=>{
+export const validateToken = async(req:Request | any)=>{
     try {
       const signature = await req.get("Authorization")
       const payload = jwt.verify(signature.split(" ")[1],JWT_SECRET_KEY)

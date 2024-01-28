@@ -1,9 +1,9 @@
 import { Request,Response,NextFunction } from "express";
-import { validateSignature } from "../utils/util";
+import { validateToken } from "../utils/util";
 
 export const auth = async(req:Request,res:Response,next:NextFunction)=>{
     try {
-        const isAuthorized = await (validateSignature(req))
+        const isAuthorized = await validateToken(req);
         if(isAuthorized) {
            return next();
         }
