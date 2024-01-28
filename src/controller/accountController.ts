@@ -60,7 +60,7 @@ export const fundAccount = async (req: Request | any, res: Response) => {
 
     return res
       .status(200)
-      .json({ message: "Accounts retrieved successfully", account });
+      .json({ message: "Account funded successfully", account });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ Error: "Internal Server Error" });

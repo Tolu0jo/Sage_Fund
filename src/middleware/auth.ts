@@ -7,7 +7,7 @@ export const auth = async(req:Request,res:Response,next:NextFunction)=>{
         if(isAuthorized) {
            return next();
         }
-        return res.status(403).json({Error: "Not Authorized"}); 
+        return res.status(401).json({message: "Not Authorized"}); 
     } catch (error) {
         
     }

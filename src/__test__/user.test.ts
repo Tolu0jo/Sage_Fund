@@ -2,7 +2,7 @@ import request from "supertest";
 import app from "../index";
 import mongoose from "mongoose";
 
-describe("POST /api/signup", () => {
+describe("User sign in and sign up test", () => {
   beforeEach(() => {
     app;
   });
@@ -13,6 +13,8 @@ describe("POST /api/signup", () => {
     await mongoose.connection.db.dropDatabase();
     await mongoose.disconnect();
   });
+
+  //sign up tests
   it("should create a new user", async () => {
     const response = await request(app).post("/api/signup").send({
       email: "test@example.com",
@@ -55,7 +57,7 @@ describe("POST /api/signup", () => {
     expect(response.body.message).toBe("User already exists, kindly signin");
   });
 
-
+// Sign in tests
   it("should sign in an existing user", async () => {
     await request(app).post("/api/signup").send({
       email: "test@example.com",

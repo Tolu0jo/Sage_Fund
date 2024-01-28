@@ -1,4 +1,5 @@
 export interface IUser{
+    _id:string|object|Buffer
     email:string
     password_hash:string
 }
