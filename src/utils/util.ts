@@ -8,7 +8,7 @@ export const generateUniqueNumericId=()=>{
   return shortUUIDInstance.generate().slice(0, 10);
 }
 
-export const generateJwtToken = async(_id:string)=>{
+export const generateJwtToken = async(_id:string|object|Buffer)=>{
     try {
         return jwt.sign({_id},JWT_SECRET_KEY,{expiresIn:"1d"})
     } catch (error) {
@@ -16,11 +16,15 @@ export const generateJwtToken = async(_id:string)=>{
     }
 }
 
-export const verifyToken = async(token:string)=>{
+export const validateSignature = async(req:Request | any)=>{
     try {
-       return jwt.verify(token, JWT_SECRET_KEY)
+      const signature = await req.get("Authorization")
+      const payload = jwt.verify(signature.split(" ")[1],JWT_SECRET_KEY)
+      req.user = payload;
+      return true;
     } catch (error) {
-        console.log(error) 
-    }
-}
+      console.log(error)
+      return false;
+    }  
+  }
 

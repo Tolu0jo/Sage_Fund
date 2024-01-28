@@ -1,10 +1,10 @@
 
 import { Router } from "express"
-import { signUp } from "../controller/userContoller"
+import { signIn, signUp } from "../controller/userContoller"
 
 const router = Router()
 
 router.post("/signup",signUp)
-
+router.post("/signin",signIn)
 
 export default router;
