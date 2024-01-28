@@ -3,6 +3,7 @@ import logger  from "morgan";
 import cors from "cors";
 import { PORT } from './config/config';
 import { dbConnect } from './config/db';
+import userRoutes from "./routes/userRoutes";
 
 
 const app = express();
@@ -13,10 +14,9 @@ app.use(logger("dev"));
 
 app.use(cors());
 
+app.use("/api",userRoutes)
+
 dbConnect()
-
-
-
 
 
 app.listen(PORT, ()=>{
