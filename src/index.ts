@@ -16,9 +16,12 @@ app.use(cors());
 
 app.use("/api",userRoutes)
 app.use("/api",accountRoutes)
+
 dbConnect()
 
 
-app.listen(PORT, ()=>{
+const server = app.listen(PORT, ()=>{
     console.log(`App listening on ${PORT} ...`);
 })
+
+export default server;
