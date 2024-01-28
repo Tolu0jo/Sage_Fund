@@ -57,7 +57,7 @@ describe("User sign in and sign up test", () => {
     expect(response.body.message).toBe("User already exists, kindly signin");
   });
 
-// Sign in tests
+  // Sign in tests
   it("should sign in an existing user", async () => {
     await request(app).post("/api/signup").send({
       email: "test@example.com",

@@ -34,52 +34,50 @@ describe("Fund withdrawal api/account/withdraw", () => {
         })
         .set("Authorization", `Bearer ${token}`);
 
-        expect(response.status).toBe(400);
-        expect(response.body.message).toBe("Kindly create an account before making withdraw.");
-
+      expect(response.status).toBe(400);
+      expect(response.body.message).toBe(
+        "Kindly create an account before making withdraw."
+      );
     });
 
     it("should fail, return 400 with Insufficient fund ", async () => {
-        const senderAccount = new accountModel({
-            user_id: user._id,
-            acctNo: generateAcctNo(),
-          });
-          await senderAccount.save();
-        const response = await request(app)
-          .post("/api/account/withdraw")
-          .send({
-            amount: 300,
-          })
-          .set("Authorization", `Bearer ${token}`);
-  
-          expect(response.status).toBe(400);
-          expect(response.body.message).toBe("Insufficient fund.");
-  
+      const senderAccount = new accountModel({
+        user_id: user._id,
+        acctNo: generateAcctNo(),
       });
-      it("should pass, return 200 with Withdrawal successfully", async () => {
-       
-        const senderAccount = new accountModel({
-            user_id: user._id,
-            acctNo: generateAcctNo(),
-            balance:500
-          });
-          await senderAccount.save();
-        const response = await request(app)
-          .post("/api/account/withdraw")
-          .send({
-            amount: 300,
-          })
-          .set("Authorization", `Bearer ${token}`);
-  
-          expect(response.status).toBe(200);
-          expect(response.body.message).toBe("Withdrawal successfully");
-          expect(response.body.account).toBeDefined();
-          const updatedAccount = await accountModel.findOne({
-            user_id: user._id,
-          });
+      await senderAccount.save();
+      const response = await request(app)
+        .post("/api/account/withdraw")
+        .send({
+          amount: 300,
+        })
+        .set("Authorization", `Bearer ${token}`);
 
-          expect(updatedAccount?.balance).toBe(200);
+      expect(response.status).toBe(400);
+      expect(response.body.message).toBe("Insufficient fund.");
+    });
+    it("should pass, return 200 with Withdrawal successfully", async () => {
+      const senderAccount = new accountModel({
+        user_id: user._id,
+        acctNo: generateAcctNo(),
+        balance: 500,
+      });
+      await senderAccount.save();
+      const response = await request(app)
+        .post("/api/account/withdraw")
+        .send({
+          amount: 300,
+        })
+        .set("Authorization", `Bearer ${token}`);
+
+      expect(response.status).toBe(200);
+      expect(response.body.message).toBe("Withdrawal successfully");
+      expect(response.body.account).toBeDefined();
+      const updatedAccount = await accountModel.findOne({
+        user_id: user._id,
       });
 
+      expect(updatedAccount?.balance).toBe(200);
+    });
   });
 });

@@ -95,7 +95,12 @@ export const transferFund = async (req: Request | any, res: Response) => {
 
     return res
       .status(200)
-      .json({ message:"Transfer successful",senderAccount_No, recieverAccount_No, amount });
+      .json({
+        message: "Transfer successful",
+        senderAccount_No,
+        recieverAccount_No,
+        amount,
+      });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ Error: "Internal Server Error" });

@@ -1,11 +1,11 @@
-import express from 'express';
-import logger  from "morgan";
-import helmet from "helmet"
+import express from "express";
+import logger from "morgan";
+import helmet from "helmet";
 import cors from "cors";
-import { PORT } from './config/config';
-import { dbConnect } from './config/db';
+import { PORT } from "./config/config";
+import { dbConnect } from "./config/db";
 import userRoutes from "./routes/userRoutes";
-import accountRoutes from "./routes/accountRoutes"
+import accountRoutes from "./routes/accountRoutes";
 
 const app = express();
 
@@ -17,14 +17,13 @@ app.use(helmet());
 
 app.use(cors());
 
-app.use("/api",userRoutes)
-app.use("/api",accountRoutes)
+app.use("/api", userRoutes);
+app.use("/api", accountRoutes);
 
-dbConnect()
+dbConnect();
 
-
-const server = app.listen(PORT, ()=>{
-    console.log(`App listening on ${PORT} ...`);
-})
+const server = app.listen(PORT, () => {
+  console.log(`App listening on ${PORT} ...`);
+});
 
 export default server;
